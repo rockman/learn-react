@@ -28,6 +28,15 @@ function render() {
     );
 
     ReactDOM.render(renderDiv, dateReact);
+
+    const now = new Date().toString();
+
+    var renderDivJsx = <div className="split">
+        JSX Template <input/>
+        <p>{now}</p>
+    </div>;
+
+    ReactDOM.render(renderDivJsx, dateReactJsx);
 }
 
 setInterval(render, 1000);
