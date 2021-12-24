@@ -4,7 +4,7 @@ import Header from './header';
 function App() {
   return (
     <div className="container">
-      <Header/>
+      <Header subtitle="Widgets for everyone!" />
     </div>
   );
 }
