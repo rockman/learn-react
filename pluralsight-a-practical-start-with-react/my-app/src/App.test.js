@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import App from './main-page';
 
-test('renders learn react link', () => {
+test('renders Featured Widget link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const headerElement = screen.getByText(/Featured Widget/i);
+  expect(headerElement).toBeInTheDocument();
 });
