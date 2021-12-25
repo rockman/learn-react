@@ -1,8 +1,12 @@
 import "./search-results.css";
+import { useNavigate } from "react-router-dom";
 
 const SearchResultsRow = ({ widget }) => {
-    function setActive() {
 
+    const navigate = useNavigate();
+
+    function setActive() {
+        navigate(`/widget/${widget.id}`)
     }
 
     return (

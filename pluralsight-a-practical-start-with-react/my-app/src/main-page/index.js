@@ -5,6 +5,7 @@ import Header from './header';
 import FeaturedWidget from './featured-widget';
 import SearchResults from '../search-results';
 import WidgetFilter from './widget-filter';
+import WidgetFromQuery from '../widget/widget-from-query';
 
 function App() {
   const [widgets, setWidgets] = useState([]);
@@ -32,6 +33,7 @@ function App() {
         <WidgetFilter allWidgets={widgets} />
         <Routes>
           <Route path="/searchresults/:value" element={<SearchResults allWidgets={widgets}/>} />
+          <Route path="/widget/:id" element={<WidgetFromQuery allWidgets={widgets} />} />
           <Route path="/" element={<FeaturedWidget widget={featuredWidget}/>} />
         </Routes>
       </div>
