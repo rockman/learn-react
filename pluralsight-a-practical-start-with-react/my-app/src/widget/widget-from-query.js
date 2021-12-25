@@ -1,7 +1,10 @@
 import { useParams } from "react-router-dom";
 import Widget from ".";
+import { useContext } from "react";
+import WidgetContext from "../context/widgetContext";
 
-const WidgetFromQuery = ({ allWidgets }) => {
+const WidgetFromQuery = () => {
+    const allWidgets = useContext(WidgetContext);
 
     let { id } = useParams();
     id = parseInt(id);

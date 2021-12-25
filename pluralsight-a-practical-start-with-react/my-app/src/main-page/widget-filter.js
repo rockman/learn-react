@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import WidgetContext from "../context/widgetContext";
 
-const WidgetFilter = ({ allWidgets }) => {
-
+const WidgetFilter = () => {
+    const allWidgets = useContext(WidgetContext);
     const navigate = useNavigate();
 
     const values = allWidgets ? Array.from(new Set(

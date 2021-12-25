@@ -1,8 +1,11 @@
 
 import SearchResultsRow from "./search-results-row";
 import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import WidgetContext from "../context/widgetContext";
 
-const SearchResults = ({ allWidgets }) => {
+const SearchResults = () => {
+    const allWidgets = useContext(WidgetContext);
 
     let { value } = useParams();
     value = parseInt(value);
