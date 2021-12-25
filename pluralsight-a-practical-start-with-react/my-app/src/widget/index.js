@@ -1,4 +1,5 @@
 import "./widget.css";
+import PropTypes from 'prop-types';
 
 const Widget = ({ widget }) => {
     return (
@@ -12,6 +13,10 @@ const Widget = ({ widget }) => {
             </div>
         </div>
     );
+}
+
+Widget.propTypes = {
+    widget: PropTypes.object.isRequired
 }
  
 export default Widget;
