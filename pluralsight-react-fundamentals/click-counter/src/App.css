@@ -1,0 +1,12 @@
+.App
+{
+  border: 1px solid blue;
+  margin: 4px;
+  padding: 10px;
+}
+
+.App:hover
+{
+  background-color: lightgreen;
+  cursor: pointer;
+}
