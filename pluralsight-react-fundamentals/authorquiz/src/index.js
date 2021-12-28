@@ -27,8 +27,6 @@ const authors = [
   }
 ]
 
-const NUMBER_CHOICES = 5;
-
 function getTurnData(authors) {
 
   const allBooks = authors.flatMap(author => author.books);
@@ -41,15 +39,37 @@ function getTurnData(authors) {
   }
 }
 
-const state = {
-  turn: getTurnData(authors)
+function isAnswerCorrect(author, book) {
+  return author.books.some(b => b === book);
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App {...state} />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function selectionClassNameForAnswer(author, book) {
+  if (!book) {
+    return '';
+  }
 
+  return isAnswerCorrect(author, book) ? 'correct' : 'incorrect';
+}
+
+function onAnswer(book) {
+  const result = selectionClassNameForAnswer(state.turn.author, book);
+  state.selectionClassName = result;
+  render();
+}
+
+const state = {
+  turn: getTurnData(authors),
+  selectionClassName: selectionClassNameForAnswer(null, null)
+}
+
+function render() {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App {...state} onAnswer={onAnswer} />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );  
+}
+
+render();
 reportWebVitals(console.log);
