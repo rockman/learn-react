@@ -2,7 +2,14 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 test('renders App div', () => {
-  render(<App />);
-  const divElement = screen.getByText(/App goes here/i);
+  const turn = {
+    author: {
+      url: 'some url'
+    },
+    books: ['foo', 'bar']
+  };
+
+  render(<App turn={turn} />);
+  const divElement = screen.getByText(/Author Quiz/i);
   expect(divElement).toBeInTheDocument();
 });
