@@ -1,5 +1,6 @@
 
 import "./bootstrap.min.css"
+import { Link } from "react-router-dom";
 import "./App.css"
 import Hero from "./hero";
 import Turn from "./turn";
@@ -12,6 +13,7 @@ function App({ turn, selectionClassName, onAnswer }) {
       <Hero />
       <Turn {...turn} selectionClassName={selectionClassName} onAnswer={onAnswer} />
       <Continue />
+      <Link to="/addauthor">Add Author</Link>
       <Footer />
     </div>
   );

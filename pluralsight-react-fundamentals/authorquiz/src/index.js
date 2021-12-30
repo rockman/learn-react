@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import App from './App';
+import AddAuthor from './addauthor';
 
 const authors = [
   {
@@ -57,15 +59,44 @@ function onAnswer(book) {
   render();
 }
 
-const state = {
-  turn: getTurnData(authors),
-  selectionClassName: selectionClassNameForAnswer(null, null)
+function addAuthor(name, books) {
+  authors.push({
+    name: name,
+    url: null,
+    books: books
+  });  
 }
+
+function newState() {
+   return {
+    turn: getTurnData(authors),
+    selectionClassName: selectionClassNameForAnswer(null, null)
+  }
+}
+
+var state = newState();
+
+const AddAuthorWrapper = () => {
+  const navigate = useNavigate();
+  
+  function onAddAuthor(name, books) {
+    addAuthor(name, books);
+    navigate("/");
+    newState();
+  }
+
+  return <AddAuthor onAddAuthor={onAddAuthor} />
+};
 
 function render() {
   ReactDOM.render(
     <React.StrictMode>
-      <App {...state} onAnswer={onAnswer} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App {...state} onAnswer={onAnswer} />} />
+          <Route path="/addauthor" element={<AddAuthorWrapper />} />
+        </Routes>        
+      </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
   );  
