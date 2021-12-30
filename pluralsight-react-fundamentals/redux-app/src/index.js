@@ -20,28 +20,11 @@ function reducer(state = initialState, action) {
 
 const store = createStore(reducer);
 
-function incrementCounter() {
-  store.dispatch({ type: 'increment' });
-}
-
-function decrementCounter() {
-  store.dispatch({ type: 'decrement' });
-}
-
-function render() {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App 
-        counter={store.getState().value}
-        incrementCounter={incrementCounter}
-        decrementCounter={decrementCounter}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-}
-
-render();
-store.subscribe(render);
