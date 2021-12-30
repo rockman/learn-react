@@ -59,6 +59,11 @@ function onAnswer(book) {
   render();
 }
 
+function onContinue() {
+  state = newState();
+  render();
+}
+
 function addAuthor(name, books) {
   authors.push({
     name: name,
@@ -82,7 +87,7 @@ const AddAuthorWrapper = () => {
   function onAddAuthor(name, books) {
     addAuthor(name, books);
     navigate("/");
-    newState();
+    state = newState();
   }
 
   return <AddAuthor onAddAuthor={onAddAuthor} />
@@ -93,7 +98,7 @@ function render() {
     <React.StrictMode>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App {...state} onAnswer={onAnswer} />} />
+          <Route path="/" element={<App {...state} onAnswer={onAnswer} onContinue={onContinue} />} />
           <Route path="/addauthor" element={<AddAuthorWrapper />} />
         </Routes>        
       </BrowserRouter>

@@ -7,12 +7,12 @@ import Turn from "./turn";
 import Continue from "./continue";
 import Footer from "./footer";
 
-function App({ turn, selectionClassName, onAnswer }) {
+function App({ turn, selectionClassName, onAnswer, onContinue }) {
   return (
     <div className="container-fluid">
       <Hero />
       <Turn {...turn} selectionClassName={selectionClassName} onAnswer={onAnswer} />
-      <Continue />
+      <Continue show={selectionClassName === "correct"} onContinue={onContinue} />
       <Link to="/addauthor">Add Author</Link>
       <Footer />
     </div>
