@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
-import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { Provider, connect } from 'react-redux';
+import { createStore } from 'redux';
 import App from './App';
 import AddAuthor from './addauthor';
 
-const authors = [
+
+const initialAuthors = [
   {
     name: "Mark Twain",
     url: "images/authors/marktwain.jpg",
@@ -27,10 +29,10 @@ const authors = [
     url: "images/authors/shakespeare.jpg",
     books: ["Hamlet", "MacBeth", "Romeo and Juliet"]
   }
-]
+];
+
 
 function getTurnData(authors) {
-
   const allBooks = authors.flatMap(author => author.books);
   const fourRandomBooks = _.shuffle(allBooks).slice(0, 4);
   const answer = _.sample(fourRandomBooks);
@@ -40,6 +42,62 @@ function getTurnData(authors) {
     books: fourRandomBooks
   }
 }
+
+function actionUserHasAnswered(state, action) {
+  const selectionClassName = selectionClassNameForAnswer(state.turn.author, action.book);
+  return {
+    ...state,
+    selectionClassName: selectionClassName
+  };
+}
+
+function actionUserRequestedNextTurn(state) {
+  return {
+    ...state,
+    turn: getTurnData(state.authors),
+    selectionClassName: ''
+  }
+}
+
+function actionAddAuthor(state, action) {
+  const author = {
+    ...action.author,
+    url: null,
+  };
+  const newAuthors = [...state.authors, author];
+  return {
+    authors: newAuthors,
+    turn: getTurnData(newAuthors),
+    selectionClassName: ''
+  };
+}
+
+const initialState = {
+  authors: initialAuthors,
+  turn: getTurnData(initialAuthors),
+  selectionClassName: ''
+}
+
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case "turn/answer":
+      return actionUserHasAnswered(state, action);
+
+    case "turn/continue":
+      return actionUserRequestedNextTurn(state);
+    
+    case "authors/add":
+      return actionAddAuthor(state, action);
+
+    default:
+      return state;
+  }
+}
+
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 function isAnswerCorrect(author, book) {
   return author.books.some(b => b === book);
@@ -53,59 +111,31 @@ function selectionClassNameForAnswer(author, book) {
   return isAnswerCorrect(author, book) ? 'correct' : 'incorrect';
 }
 
-function onAnswer(book) {
-  const result = selectionClassNameForAnswer(state.turn.author, book);
-  state.selectionClassName = result;
-  render();
-}
 
-function onContinue() {
-  state = newState();
-  render();
-}
-
-function addAuthor(name, books) {
-  authors.push({
-    name: name,
-    url: null,
-    books: books
-  });  
-}
-
-function newState() {
-   return {
-    turn: getTurnData(authors),
-    selectionClassName: selectionClassNameForAnswer(null, null)
-  }
-}
-
-var state = newState();
-
-const AddAuthorWrapper = () => {
+const AddAuthorWrapperCore = ({dispatch}) => {
   const navigate = useNavigate();
   
   function onAddAuthor(name, books) {
-    addAuthor(name, books);
+    dispatch({ type: "authors/add", author: { name, books }})
     navigate("/");
-    state = newState();
   }
 
   return <AddAuthor onAddAuthor={onAddAuthor} />
-};
+}
 
-function render() {
-  ReactDOM.render(
-    <React.StrictMode>
+const AddAuthorWrapper = connect(null)(AddAuthorWrapperCore);
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App {...state} onAnswer={onAnswer} onContinue={onContinue} />} />
+          <Route path="/" element={<App />} />
           <Route path="/addauthor" element={<AddAuthorWrapper />} />
         </Routes>        
       </BrowserRouter>
-    </React.StrictMode>,
-    document.getElementById('root')
-  );  
-}
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-render();
-reportWebVitals(console.log);

@@ -6,8 +6,27 @@ import Hero from "./hero";
 import Turn from "./turn";
 import Continue from "./continue";
 import Footer from "./footer";
+import { connect } from "react-redux";
 
-function App({ turn, selectionClassName, onAnswer, onContinue }) {
+function mapStateToProps(state) {
+  return {
+    turn: state.turn,
+    selectionClassName: state.selectionClassName
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onAnswer: (book) => {
+      dispatch({ type: "turn/answer", book: book });
+    },
+    onContinue: () => {
+      dispatch({ type: "turn/continue" });
+    }
+  };
+}
+
+function AppCore({ turn, selectionClassName, onAnswer, onContinue }) {
   return (
     <div className="container-fluid">
       <Hero />
@@ -18,5 +37,7 @@ function App({ turn, selectionClassName, onAnswer, onContinue }) {
     </div>
   );
 }
+
+const App = connect(mapStateToProps, mapDispatchToProps)(AppCore);
 
 export default App;
