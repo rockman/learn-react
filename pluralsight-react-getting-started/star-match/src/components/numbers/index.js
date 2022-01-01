@@ -1,10 +1,7 @@
 
-import { useState } from "react";
 import Number from "./Number";
 
-const Numbers = ({ target, availableNumbers }) => {
-
-    const [selection, setSelection] = useState([]);
+const Numbers = ({ availableNumbers, selection, handleSelect }) => {
 
     const stateFor = (value) => {
         if (!availableNumbers.includes(value)) {
@@ -18,25 +15,15 @@ const Numbers = ({ target, availableNumbers }) => {
         return '';
     };
 
-    const handleSelect = (value) => {
-        if (availableNumbers.includes(value)) {
-            if (selection.includes(value)) {
-                setSelection(selection.filter(i => i !== value));
-            } else {
-                setSelection([...selection, value]);
-            }
-        }
-    };
-
     return (
         <div>
-            { Array.from({ length: 9 }, (_, i) => 
-                <Number
-                    key={i}
-                    value={i + 1} 
-                    state={stateFor(i + 1)}
-                    onClick={() => handleSelect(i + 1)}
-                />)}
+            { 
+              Array.from({ length: 9 }, (_, i) => {
+                const value = i + 1;
+                return <Number key={i} value={value} state={stateFor(value)}
+                  onClick={() => handleSelect(value)} />
+              })
+            }
         </div>
     )
 }
