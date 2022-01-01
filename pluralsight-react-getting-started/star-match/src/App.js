@@ -5,14 +5,49 @@ import GameBoard from "./components/gameboard";
 import "./App.css";
 
 
+function pickOne(numbers) {
+  return numbers[Math.floor(Math.random() * numbers.length)];
+}
+
+function pickFancyTarget(numbers) {
+
+  if (numbers.length < 3 || numbers.length === 9) {
+    return pickOne(numbers);
+  }
+
+  const options = new Set(numbers);
+
+  if (numbers.includes(1) && numbers.includes(2) && numbers.includes(3)) {
+    options.add(6);
+  }
+
+  const numbersToAdd = numbers.filter(n => n < 9);
+  for (let first = 0; first < numbersToAdd.length; first++) {
+    for (let second = 0; second < numbersToAdd.length; second++) {
+      if (second !== first) {
+        const sum = numbers[first] + numbers[second];
+        if (sum < 10) {
+          options.add(sum);
+        }  
+      }
+    }
+  }
+
+  return pickOne(Array.from(options));
+}
+
+const pickFromMoreThanOneAvailableNumber = pickFancyTarget;
+
 function pickTarget(availableNumbers) {
   if (availableNumbers.length === 0) {
     return null;
-  } else if (availableNumbers.length === 1) {
+  }
+  
+  if (availableNumbers.length === 1) {
     return availableNumbers[0];
   }
 
-  return availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
+  return pickFromMoreThanOneAvailableNumber(availableNumbers);
 }
 
 function createInitialState() {
