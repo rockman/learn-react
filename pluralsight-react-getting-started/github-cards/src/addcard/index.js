@@ -8,11 +8,18 @@ class AddForm extends React.Component {
     constructor(props) {
         super(props);
         this.handleAdd = this.handleAdd.bind(this);
-        this.textRef = React.createRef();
+        this.handleUserChange = this.handleUserChange.bind(this);
+        this.state = {
+            username: ''
+        }
     }
 
     handleAdd() {
-        this.props.handleAdd(this.textRef.current.value);
+        this.props.handleAdd(this.state.username);
+    }
+
+    handleUserChange(event) {
+        this.setState({ username: event.target.value })
     }
 
     render() {
@@ -24,7 +31,13 @@ class AddForm extends React.Component {
                         <label htmlFor="user" className="form-label">User</label>
                     </div>
                     <div className="col-auto">
-                        <input ref={this.textRef} type="text" name="user" className="form-control"></input>
+                        <input 
+                            value={this.state.username} 
+                            onChange={this.handleUserChange}
+                            type="text" 
+                            name="user" 
+                            className="form-control"
+                        />
                     </div>
                     <div className="col-auto">
                         <AddButton handleClick={this.handleAdd} />

@@ -4,7 +4,7 @@ import AddForm from "./addcard";
 
 
 async function addUser(username) {
-  const response = await fetch('https://api.github.com/users/' + username);
+  const response = await fetch(`https://api.github.com/users/${username}`);
   const body = await response.json();
   return {
     name: body.name,
