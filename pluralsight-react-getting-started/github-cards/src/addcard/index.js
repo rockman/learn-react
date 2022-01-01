@@ -16,6 +16,7 @@ class AddForm extends React.Component {
 
     handleAdd() {
         this.props.handleAdd(this.state.username);
+        this.setState({ username: '' })
     }
 
     handleUserChange(event) {
