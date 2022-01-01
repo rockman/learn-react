@@ -3,7 +3,7 @@ import Stars from "../stars";
 import Numbers from "../numbers";
 import NewGame from "../newgame";
 
-const GameBoard = ({ target, availableNumbers, selection, showNewGame, handleNewGame, handleSelect }) => {
+const GameBoard = ({ target, availableNumbers, selection, incorrect, showNewGame, handleNewGame, handleSelect }) => {
 
     return (
         <div className="d-flex justify-content-center">
@@ -17,6 +17,7 @@ const GameBoard = ({ target, availableNumbers, selection, showNewGame, handleNew
                 <Numbers
                   availableNumbers={availableNumbers}
                   selection={selection}
+                  incorrect={incorrect}
                   handleSelect={handleSelect} />
             </div>
         </div>

@@ -57,6 +57,7 @@ function createInitialState() {
     availableNumbers,
     selection: [],
     target: pickTarget(availableNumbers),
+    incorrect: false,
     showNewGame: false
   }
 }
@@ -85,7 +86,8 @@ function updateState(state, number) {
 
   return {
     ...state,
-    selection
+    selection,
+    incorrect: result > state.target
   }
 }
 

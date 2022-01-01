@@ -1,7 +1,7 @@
 
 import Number from "./Number";
 
-const Numbers = ({ availableNumbers, selection, handleSelect }) => {
+const Numbers = ({ availableNumbers, selection, incorrect, handleSelect }) => {
 
     const stateFor = (value) => {
         if (!availableNumbers.includes(value)) {
@@ -9,7 +9,7 @@ const Numbers = ({ availableNumbers, selection, handleSelect }) => {
         }
 
         if (selection.includes(value)) {
-            return 'selected';
+            return incorrect ? 'incorrect' : 'selected';
         }
 
         return '';
