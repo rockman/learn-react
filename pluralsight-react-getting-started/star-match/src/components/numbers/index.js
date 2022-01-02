@@ -1,5 +1,5 @@
 
-import Number from "./Number";
+import NumberItem from "./NumberItem";
 
 const Numbers = ({ availableNumbers, selection, incorrect, gameOver, handleSelect }) => {
 
@@ -26,7 +26,7 @@ const Numbers = ({ availableNumbers, selection, incorrect, gameOver, handleSelec
             { 
               Array.from({ length: 9 }, (_, i) => {
                 const value = i + 1;
-                return <Number key={i} value={value} state={stateFor(value)}
+                return <NumberItem key={i} value={value} state={stateFor(value)}
                   onClick={() => handleClick(value)} />
               })
             }

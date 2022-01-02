@@ -1,5 +1,5 @@
 
-const Number = ({ value, state, onClick }) => {
+const NumberItem = ({ value, state, onClick }) => {
 
     return (
         <div className={`
@@ -12,5 +12,5 @@ const Number = ({ value, state, onClick }) => {
     )
 }
 
-export default Number;
+export default NumberItem;
 
