@@ -3,6 +3,8 @@ import { useState } from "react";
 import Instructions from "./components/instructions";
 import GameBoard from "./components/gameboard";
 import "./App.css";
+import Countdown from "./components/countdown";
+import Timeout from "./components/timeout";
 
 
 function pickOne(numbers) {
@@ -58,6 +60,7 @@ function createInitialState() {
     selection: [],
     target: pickTarget(availableNumbers),
     incorrect: false,
+    timeout: false,
     showNewGame: false
   }
 }
@@ -80,6 +83,8 @@ function updateState(state, number) {
       availableNumbers,
       selection: [],
       target: pickTarget(availableNumbers),
+      incorrect: false,
+      timeout: state.timeout,
       showNewGame: availableNumbers.length === 0
     }
   }
@@ -103,10 +108,22 @@ function App() {
     setState(createInitialState())
   }
 
+  function handleTimeRanOut() {
+    setState({
+      ...state,
+      timeout: true,
+      showNewGame: true
+    })
+  }
+
   return (
     <div className="container">
       <Instructions />
       <GameBoard {...state} handleNewGame={handleNewGame} handleSelect={handleSelect} />
+      { state.timeout
+        ? <Timeout />
+        : <Countdown handleTimeRanOut={handleTimeRanOut} />
+      }
     </div>
   );
 }

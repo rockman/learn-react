@@ -1,7 +1,7 @@
 
 import Number from "./Number";
 
-const Numbers = ({ availableNumbers, selection, incorrect, handleSelect }) => {
+const Numbers = ({ availableNumbers, selection, incorrect, gameOver, handleSelect }) => {
 
     const stateFor = (value) => {
         if (!availableNumbers.includes(value)) {
@@ -15,13 +15,19 @@ const Numbers = ({ availableNumbers, selection, incorrect, handleSelect }) => {
         return '';
     };
 
+    function handleClick(value) {
+        if (!gameOver) {
+            handleSelect(value)
+        }
+    }
+
     return (
         <div>
             { 
               Array.from({ length: 9 }, (_, i) => {
                 const value = i + 1;
                 return <Number key={i} value={value} state={stateFor(value)}
-                  onClick={() => handleSelect(value)} />
+                  onClick={() => handleClick(value)} />
               })
             }
         </div>

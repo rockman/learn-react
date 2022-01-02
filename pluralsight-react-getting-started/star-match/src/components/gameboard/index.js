@@ -18,6 +18,7 @@ const GameBoard = ({ target, availableNumbers, selection, incorrect, showNewGame
                   availableNumbers={availableNumbers}
                   selection={selection}
                   incorrect={incorrect}
+                  gameOver={showNewGame}
                   handleSelect={handleSelect} />
             </div>
         </div>
