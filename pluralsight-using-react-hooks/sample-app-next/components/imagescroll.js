@@ -1,22 +1,23 @@
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 
-export default function ImageScroll({ index, offImg, onImg }) {
+export default function ImageScroll({ offImg, onImg }) {
 
     const imgRef = useRef();
+
+    const [inView, setInView] = useState(false);
 
     function imgPath(imageName) {
         return `/static/images/${imageName}.png`
     }
 
-    function handleScroll() {
+    function isInView() {
         const rect = imgRef.current.getBoundingClientRect();
-        const isFullyVisible = (rect.top >= 0) && (rect.bottom <= window.innerHeight);
-        const desiredImg = isFullyVisible ? imgPath(onImg) : imgPath(offImg);
-        const currentImg = imgRef.current.src;
-        if (desiredImg !== currentImg) {
-            imgRef.current.src = desiredImg;
-        }
+        return (rect.top >= 0) && (rect.bottom <= window.innerHeight);
+    }
+
+    function handleScroll() {
+        setInView(isInView())
     }
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function ImageScroll({ index, offImg, onImg }) {
 
     return (
         <img 
-            src={imgPath(offImg)}
+            src={inView ? imgPath(onImg) : imgPath(offImg)}
             ref={imgRef}
             alt='Off Image' 
         />

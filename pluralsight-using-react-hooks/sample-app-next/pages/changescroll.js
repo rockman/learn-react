@@ -7,7 +7,7 @@ const ChangeScroll = ({offImg, onImg}) => {
             { Array.from({ length: 5 }, (_, i) =>
                 (
                     <div key={i}>
-                        <ImageScroll index={i} offImg='off' onImg='on' />
+                        <ImageScroll offImg='off' onImg='on' />
                     </div>
                 )
             )}
