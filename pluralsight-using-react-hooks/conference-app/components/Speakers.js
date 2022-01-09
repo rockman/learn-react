@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useContext, useReducer } from "react";
+import { useState, useEffect, useContext, useReducer, useCallback } from "react";
 
 import Header from "./Header";
 import Menu from "./Menu";
@@ -43,17 +43,20 @@ const Speakers = () => {
 
     }, []);
 
+    const handleFavouriteClick = useCallback(
+        speakerId => {
+            setSpeakerDispatch({
+                type: "flipFavourite",
+                data: speakerId
+            })    
+        },
+        []
+    );
+
     const context = useContext(ConfigContext);
 
     if (isLoading) {
         return <p>Loading...</p>
-    }
-
-    function handleFavouriteClick(speakerId) {
-        setSpeakerDispatch({
-            type: "flipFavourite",
-            data: speakerId
-        })
     }
 
     function handleWeekendCheck() {

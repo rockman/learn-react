@@ -1,4 +1,6 @@
-const SpeakerDetail = ({id, firstName, lastName, favourite, handleFavouriteClick}) => {
+import React from "react";
+
+const SpeakerDetail = React.memo(({id, firstName, lastName, favourite, handleFavouriteClick}) => {
     return (
         <div className="card">
             <div className="card-body">
@@ -14,6 +16,6 @@ const SpeakerDetail = ({id, firstName, lastName, favourite, handleFavouriteClick
             </div>
         </div>
     );
-}
+});
  
 export default SpeakerDetail;
