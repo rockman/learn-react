@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useReducer } from "react";
 
 import Header from "./Header";
 import Menu from "./Menu";
@@ -10,7 +10,23 @@ import { ConfigContext } from "./App";
 
 const Speakers = () => {
 
-    const [speakerList, setSpeakerList] = useState([]);
+    function speakerListReducer(state, action) {
+        switch (action.type) {
+            case "setSpeakerList":
+                return action.data;
+
+            case "flipFavourite":
+                return state.map(i => i.id === action.data
+                    ? {...i, favourite: !i.favourite}
+                    : i
+                );
+
+            default:
+                return state;
+        }
+    }
+
+    const [speakerList, setSpeakerDispatch] = useReducer(speakerListReducer, []);
     const [isLoading, setIsLoading] = useState(true);
     const [showWeekendOnly, setShowWeekendOnly] = useState(false);
 
@@ -19,7 +35,11 @@ const Speakers = () => {
         new Promise(resolve => {
             setTimeout(() => resolve(), 1000);
         }).then(() => setIsLoading(false));
-        setSpeakerList(SpeakerData);
+
+        setSpeakerDispatch({
+            type: "setSpeakerList",
+            data: SpeakerData
+        })
 
     }, []);
 
@@ -30,10 +50,10 @@ const Speakers = () => {
     }
 
     function handleFavouriteClick(speakerId) {
-        setSpeakerList(speakerList.map(i => i.id === speakerId
-            ? {...i, favourite: !i.favourite}
-            : i
-        ))
+        setSpeakerDispatch({
+            type: "flipFavourite",
+            data: speakerId
+        })
     }
 
     function handleWeekendCheck() {
