@@ -8,8 +8,8 @@ const SignMeUp = ({ signupCallback }) => {
     const context = useContext(ConfigContext);
 
     return (
-        <>
-        {context.showSignMeUp ?
+
+        context.showSignMeUp ?
         <div>
             <input placeholder="Enter Email" type="email" name="email"
                 value={email}
@@ -24,8 +24,7 @@ const SignMeUp = ({ signupCallback }) => {
                 }}
             >Get Updates</button>
         </div>
-        : <></>}
-        </>
+        : <></>
     )
     
 }
