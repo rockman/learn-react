@@ -1,10 +1,11 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Header from "./Header";
 import Menu from "./Menu";
 import SpeakerData from "./SpeakerData";
 import SpeakerDetail from "./SpeakerDetail";
+import { ConfigContext } from "./App";
 
 
 const Speakers = () => {
@@ -21,6 +22,8 @@ const Speakers = () => {
         setSpeakerList(SpeakerData);
 
     }, []);
+
+    const context = useContext(ConfigContext);
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -45,6 +48,7 @@ const Speakers = () => {
         <div>
             <Header />
             <Menu />
+            {context.showSpeakingDays ?
             <div className="form-check">
                 <input type="checkbox"
                     className="form-check-input"
@@ -54,6 +58,8 @@ const Speakers = () => {
                 />
                 <label htmlFor="checkboxWeekend">Weekend Speaker?</label>
             </div>
+            : <></>
+            }
             <div className="container">
                 <div className="row">
                     {filteredSpeakers.map(item => 

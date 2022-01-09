@@ -1,7 +1,10 @@
+import { createContext } from "react";
+
 import Home from "./home";
 import Speakers from "./Speakers";
 
-const App = ({ pageName }) => {
+
+function pageToShow(pageName) {
     switch (pageName) {
         case "Home":
             return <Home />;
@@ -14,5 +17,17 @@ const App = ({ pageName }) => {
     }
 }
 
+const configValue = {
+    showSignMeUp: true,
+    showSpeakingDays: true
+}
+
+const App = ({ pageName }) => (
+    <ConfigContext.Provider value={configValue}>
+        {pageToShow(pageName)}
+    </ConfigContext.Provider>
+)
+
+export const ConfigContext = createContext();
 
 export default App;

@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ConfigContext } from "./App";
 
 const SignMeUp = ({ signupCallback }) => {
 
     const [email, setEmail] = useState("");
 
+    const context = useContext(ConfigContext);
+
     return (
+        <>
+        {context.showSignMeUp ?
         <div>
             <input placeholder="Enter Email" type="email" name="email"
                 value={email}
@@ -19,7 +24,10 @@ const SignMeUp = ({ signupCallback }) => {
                 }}
             >Get Updates</button>
         </div>
-    );
+        : <></>}
+        </>
+    )
+    
 }
  
 export default SignMeUp;
