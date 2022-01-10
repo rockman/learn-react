@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useContext, useReducer, useCallback } from "react";
+import { useState, useEffect, useContext, useReducer, useCallback, useMemo } from "react";
 
 import Header from "./Header";
 import Menu from "./Menu";
@@ -53,6 +53,8 @@ const Speakers = () => {
         []
     );
 
+    const filteredSpeakers = useMemo(filterListForWeekend, [speakerList, showWeekendOnly]);
+
     const context = useContext(ConfigContext);
 
     if (isLoading) {
@@ -63,9 +65,10 @@ const Speakers = () => {
         setShowWeekendOnly(!showWeekendOnly);
     }
 
-    const filteredSpeakers = showWeekendOnly
-        ? speakerList.filter(i => i.weekend)
-        : speakerList;
+    function filterListForWeekend() {
+        console.log('Filtering list!', new Date());
+        return showWeekendOnly ? speakerList.filter(i => i.weekend) : speakerList;
+    }
 
     return (
         <div>
